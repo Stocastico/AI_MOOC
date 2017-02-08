@@ -1,4 +1,4 @@
-class solver(object):
+class Solver(object):
     """description of class"""
 
 
