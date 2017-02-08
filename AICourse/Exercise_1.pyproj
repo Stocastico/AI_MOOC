@@ -23,6 +23,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AbstractState.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Exercise_1\board.py">
       <SubType>Code</SubType>
     </Compile>
