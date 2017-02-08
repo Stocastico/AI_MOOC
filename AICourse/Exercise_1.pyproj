@@ -6,7 +6,7 @@
     <ProjectGuid>d3de89ed-90f8-444e-bff3-aaf65f713ce0</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>driver_3.py</StartupFile>
+    <StartupFile>Exercise_1\driver_3.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,16 +23,19 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="board.py">
+    <Compile Include="Exercise_1\board.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="driver_3.py" />
-    <Compile Include="solver.py">
+    <Compile Include="Exercise_1\driver_3.py" />
+    <Compile Include="Exercise_1\solver.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="state.py">
+    <Compile Include="Exercise_1\state.py">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exercise_1\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
