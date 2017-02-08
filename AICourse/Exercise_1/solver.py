@@ -1,4 +1,4 @@
-from queue import Queue
+from collections import deque
 from state import State
 
 class Solver(object):
@@ -46,22 +46,22 @@ class Solver(object):
           raise RuntimeError('Solver didn\'t reach final state')
 
     def bfs(self):
-        self.frontier = Queue()
-        self.frontier.put(self.state)
+        self.frontier = deque([])
+        self.frontier.append([self.state, ''])
         self.fringeSize += 1
         self.explored = set()
 
-        while not frontier.empty():
-            currState = frontier.get()
+        while not self.frontier.empty():
+            currState = self.frontier.popLeft()
             self.fringeSize -= 1
             self.explored.add(currState)
 
             if self.state.testEqual(self.goalState):
                 return True
 
-            for neighbour in currState.neighbours():
+            for [neighbour, direction] in currState.neighbours():
                 if neighbour not in self.frontier and neighbour not in self.explored:
-                    self.frontier.put(neighbour)
+                    self.frontier.append(neighbour)
                     self.fringeSize += 1
 
             if self.fringeSize > self.maxFringeSize:
