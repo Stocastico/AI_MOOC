@@ -36,6 +36,12 @@
     <Compile Include="Exercise_1\state.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exercise_1\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="timing.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Exercise_1\" />

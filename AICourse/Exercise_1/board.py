@@ -4,58 +4,63 @@ class Board(object):
     values = []
 
     def __init__(self, vals):
-      self.values = vals
+      self.values = getValuesFromString(self, vals)
+
+    def getValuesFromString(self, str):
+      strList = str.split(',')
+      self.values = list(map(int, strList))
+
+    def valuesAsString(self):
+      out = ''
+      for val in self.values:
+        out = out + str(val) + ','
+      return out[:-1]
 
     def validMoves(self):
       """Check possible movements of empty square"""
       position = self.values.index(0);
-
       if 0 == position:
-        return ['D', 'R']
+        return ['Down', 'Right']
       elif 1 == position:
-        return ['D', 'L', 'R']
+        return ['Down', 'Left', 'Right']
       elif 2 == position:
-        return ['D', 'L']
+        return ['Down', 'Left']
       elif 3 == position:
-        return ['U', 'D', 'R']
+        return ['Up', 'Down', 'Right']
       elif 4 == position:
-        return ['U', 'D', 'L', 'R']
+        return ['Up', 'Down', 'Left', 'Right']
       elif 5 == position:
-        return ['U', 'D', 'L']
+        return ['Up', 'Down', 'Left']
       elif 6 == position:
-        return ['U', 'R']
+        return ['Up', 'Right']
       elif 7 == position:
-        return ['U', 'L', 'R']
+        return ['Up', 'Left', 'Right']
       elif 8 == position:
-        return ['U', 'L']
+        return ['Up', 'Left']
       else:
         raise ValueError('position should be a number between 0 and 8')
 
     def swap(self, direction):
       """Switch position of empty suare with tile indicated by direction """
       positionEmpty = self.values.index(0);
-
-      if 'U' == direction:
+      if 'Up' == direction:
         positionToSwap = positionEmpty - 3
         self.values[positionEmpty] = self.values[positionToSwap]
         self.values[positionToSwap] = 0
-      elif 'D' == direction:
+      elif 'Down' == direction:
         positionToSwap = positionEmpty + 3
         self.values[positionEmpty] = self.values[positionToSwap]
         self.values[positionToSwap] = 0
-      elif 'L' == direction:
+      elif 'Left' == direction:
         positionToSwap = positionEmpty - 1
         self.values[positionEmpty] = self.values[positionToSwap]
         self.values[positionToSwap] = 0
-      elif 'R' == direction:
+      elif 'Right' == direction:
         positionToSwap = positionEmpty + 1
         self.values[positionEmpty] = self.values[positionToSwap]
         self.values[positionToSwap] = 0
       else:
-        raise ValueError('direction should be one of U, D, L, R')
-        
+        raise ValueError('direction should be one of Up, Down, Left, Right')
 
-
-
-
-  
+    def isEqual(self, test):
+      return self.values == test
