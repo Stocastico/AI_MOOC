@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class AbstractState(ABC):
+class AbstractNode(ABC):
     """generic class representing a state when searching"""
 
     def __init__(self):

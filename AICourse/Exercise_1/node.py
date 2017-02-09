@@ -1,11 +1,10 @@
-import AbstractState
+import AbstractNode
 from board import Board
 
-class State(AbstractState):
-    """Implementation of state when solving n-puzzle"""
+class Node(Object):
+    """Implementation of node when solving n-puzzle"""
 
     board
-    parentBoard
 
     def __init__(self, initialState):
         super(AbstractOperation, self).__init__()
