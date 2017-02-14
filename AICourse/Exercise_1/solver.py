@@ -15,18 +15,18 @@ class Solver(object):
     def __init__(self, method, initialState):
         self.method = method  # method used to solve puzzle
         self.state = Node(initialState) # instance of State class
-        self.tree = self.state # tree starting from initial configuration
+        #self.tree = self.state # tree starting from initial configuration
         if self.method == 'bfs':
             self.frontier = deque([self.state], None)
-        elif self.method == 'bfs':
+        elif self.method == 'dfs':
             self.frontier = [self.state] # list of states to be explored
         elif self.method == 'ast':
             self.frontier = PriorityQueue()
             self.frontier.put(self.state)
         elif self.method == 'ida':
             self.frontier = [self.state]
-            self.threshold = self.state.board.manhattanDist();
-            self.initialState = initialState
+            self.threshold = 1;
+            self.initialState =  Node(initialState)
         self.explored = set() # list of states already explored
         self.goal = Node(list(range(len(initialState.split(',')))))
         self.pathToGoal = [] # something like ['Up', 'Left', 'Left']
@@ -51,10 +51,13 @@ class Solver(object):
           retVal = self.ast()
         elif self.method == 'ida':
           retVal = self.ida()
-          while retVal == False:
-              self.threshold = self.threshold + 2
+          while retVal is not True:
+              self.threshold = self.threshold + 1
               self.frontier = [self.initialState]
-              retVal == self.ida()
+              self.explored = set()
+              self.nodesExpanded = 0
+              self.fringeSize = 1
+              retVal = self.ida()
         else:
           raise ValueError('Possible methods are dfs, bfs, ast, ida')
 
@@ -153,7 +156,7 @@ class Solver(object):
     def ida(self):
         while len(self.frontier) > 0:
             self.state = self.frontier.pop()
-            #print("Current State:\n" + str(self.state))
+            print("Current State:\n" + str(self.state))
             self.fringeSize -= 1
             self.explored.add(str(self.state.board.values))
 
