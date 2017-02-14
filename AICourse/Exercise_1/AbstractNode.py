@@ -4,10 +4,10 @@ class AbstractNode(ABC):
     """generic class representing a state when searching"""
 
     def __init__(self):
-      super(AbstractOperation, self).__init__()
+      super(AbstractNode, self).__init__()
 
     @abstractmethod
-    def goalTest(self, goalState):
+    def testEqual(self, goalState):
       """check if state correspond to our goal"""
       pass
 

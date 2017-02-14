@@ -1,66 +1,75 @@
-class Board(object):
-    """Representation of a 3x3 board"""
+import math
 
-    values = []
+def getValuesFromString(str):
+    strList = str.split(',')
+    return list(map(int, strList))
+
+class Board(object):
+    """Representation of a N x N board"""
 
     def __init__(self, vals):
-      self.values = getValuesFromString(self, vals)
-
-    def getValuesFromString(self, str):
-      strList = str.split(',')
-      self.values = list(map(int, strList))
+        if isinstance(vals, str):
+            listStrVal = vals.split(',')
+            self.values = [int(i) for i in listStrVal]
+        else:
+            self.values = vals
+        self.N = round(math.sqrt(len(self.values)))
 
     def valuesAsString(self):
-      out = ''
-      for val in self.values:
-        out = out + str(val) + ','
-      return out[:-1]
+        out = ''
+        for val in self.values:
+            out = out + str(val) + ','
+        return out[:-1]
 
     def validMoves(self):
-      """Check possible movements of empty square"""
-      position = self.values.index(0);
-      if 0 == position:
-        return ['Down', 'Right']
-      elif 1 == position:
-        return ['Down', 'Left', 'Right']
-      elif 2 == position:
-        return ['Down', 'Left']
-      elif 3 == position:
-        return ['Up', 'Down', 'Right']
-      elif 4 == position:
-        return ['Up', 'Down', 'Left', 'Right']
-      elif 5 == position:
-        return ['Up', 'Down', 'Left']
-      elif 6 == position:
-        return ['Up', 'Right']
-      elif 7 == position:
-        return ['Up', 'Left', 'Right']
-      elif 8 == position:
-        return ['Up', 'Left']
-      else:
-        raise ValueError('position should be a number between 0 and 8')
+        """Check possible movements of empty square"""
+        position = self.values.index(0); # 0 represents the empty square
+        # first the four corners
+        if 0 == position:
+            return ['Down', 'Right']
+        elif (self.N - 1) == position:
+            return ['Down', 'Left']
+        elif (self.N ** 2 - self.N) == position:
+            return ['Up', 'Right']
+        elif (self.N ** 2 - 1) == position:
+            return ['Up', 'Left']
+        # then the borders
+        elif position < self.N - 1:
+            return ['Down', 'Left', 'Right']
+        elif position > (self.N ** 2 - self.N):
+            return ['Up', 'Left', 'Right']
+        elif 0 == position % self.N:
+            return ['Up', 'Down', 'Right']
+        elif self.N-1 == position % self.N:
+             return ['Up', 'Down', 'Left']
+        # inside points
+        else:
+            return ['Up', 'Down', 'Left', 'Right']
 
     def swap(self, direction):
       """Switch position of empty suare with tile indicated by direction """
       positionEmpty = self.values.index(0);
+      newState = list(self.values)
       if 'Up' == direction:
-        positionToSwap = positionEmpty - 3
-        self.values[positionEmpty] = self.values[positionToSwap]
-        self.values[positionToSwap] = 0
+          positionToSwap = positionEmpty - 3
+          newState[positionEmpty] = self.values[positionToSwap]
+          newState[positionToSwap] = 0
       elif 'Down' == direction:
-        positionToSwap = positionEmpty + 3
-        self.values[positionEmpty] = self.values[positionToSwap]
-        self.values[positionToSwap] = 0
+          positionToSwap = positionEmpty + 3
+          newState[positionEmpty] = self.values[positionToSwap]
+          newState[positionToSwap] = 0
       elif 'Left' == direction:
-        positionToSwap = positionEmpty - 1
-        self.values[positionEmpty] = self.values[positionToSwap]
-        self.values[positionToSwap] = 0
+          positionToSwap = positionEmpty - 1
+          newState[positionEmpty] = self.values[positionToSwap]
+          newState[positionToSwap] = 0
       elif 'Right' == direction:
-        positionToSwap = positionEmpty + 1
-        self.values[positionEmpty] = self.values[positionToSwap]
-        self.values[positionToSwap] = 0
+          positionToSwap = positionEmpty + 1
+          newState[positionEmpty] = self.values[positionToSwap]
+          newState[positionToSwap] = 0
       else:
-        raise ValueError('direction should be one of Up, Down, Left, Right')
+          raise ValueError('direction should be one of Up, Down, Left, Right')
+
+      return newState
 
     def isEqual(self, test):
-      return self.values == test
+        return self.values == test

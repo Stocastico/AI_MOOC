@@ -13,6 +13,9 @@
     <OutputPath>.</OutputPath>
     <Name>Exercise_1</Name>
     <RootNamespace>AICourse</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>bfs 1,2,5,3,4,0,6,7,8</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,7 +26,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AbstractState.py">
+    <Compile Include="Exercise_1\AbstractNode.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exercise_1\board.py">
@@ -33,7 +36,7 @@
     <Compile Include="Exercise_1\solver.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Exercise_1\state.py">
+    <Compile Include="Exercise_1\node.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exercise_1\__init__.py">
