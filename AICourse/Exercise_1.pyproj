@@ -14,7 +14,7 @@
     <Name>Exercise_1</Name>
     <RootNamespace>AICourse</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>dfs 1,2,5,3,4,0,6,7,8</CommandLineArguments>
+    <CommandLineArguments>ast 1,2,5,3,4,0,6,7,8</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

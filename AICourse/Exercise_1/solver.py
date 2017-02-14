@@ -1,4 +1,5 @@
 from collections import deque
+from queue import PriorityQueue
 from node import Node
 from board import Board
 from time import process_time
@@ -17,8 +18,11 @@ class Solver(object):
         self.tree = self.state # tree starting from initial configuration
         if self.method == 'bfs':
             self.frontier = deque([self.state], None)
-        else:
+        elif self.method == 'bfs':
             self.frontier = [self.state] # list of states to be explored
+        elif  self.method == 'ast':
+            self.frontier = PriorityQueue()
+            self.frontier.put(self.state)
         self.explored = set() # list of states already explored
         self.goal = Node(list(range(len(initialState.split(',')))))
         self.pathToGoal = [] # something like ['Up', 'Left', 'Left']
@@ -110,7 +114,33 @@ class Solver(object):
                 self.maxFringeSize = self.fringeSize
 
     def ast(self):
-        pass
+        while self.frontier.qsize() > 0:
+            self.state = self.frontier.get()
+            print("Current State:\n" + str(self.state))
+            self.fringeSize -= 1
+            self.explored.add(str(self.state.board.values))
+
+            if self.state.testEqual(self.goal):
+                self.searchDepth = self.state.depth
+                self.costOfPath = self.state.depth
+                self.pathToGoal = self.getPathToGoal()
+                return True
+
+            neighbours = self.state.neighbours()
+
+            for neighbour in neighbours:
+                if str(neighbour.board.values) not in self.explored:
+                    neighbour.heuristics = neighbour.board.manhattanDist()
+                    self.frontier.put(neighbour)
+                    self.explored.add(str(neighbour.board.values))
+                    self.fringeSize += 1
+                    if neighbour.depth > self.maxSearchDepth:
+                        self.maxSearchDepth = neighbour.depth
+
+            self.nodesExpanded += 1
+
+            if self.fringeSize > self.maxFringeSize:
+                self.maxFringeSize = self.fringeSize
 
     def ida(self):
         pass

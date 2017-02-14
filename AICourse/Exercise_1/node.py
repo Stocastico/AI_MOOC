@@ -4,12 +4,16 @@ from board import Board
 class Node(AbstractNode):
     """Implementation of node when solving n-puzzle"""
 
-    def __init__(self, state, parent = None, action = None, path_cost = 0):
+    def __init__(self, state, parent = None, action = None, path_cost = 0, goal = None):
         super(AbstractNode, self).__init__()
         self.board = Board(state)   # board configuration
         self.parent = parent        # Parent node
         self.action = action        # What brought us to this state
         self.path_cost = path_cost  # g in the lecture
+        if goal == None:
+            self.heuristics = 0
+        else:
+            self.heuristics = self.board.manhattanDist(goal)
         self.depth = 0              # depth of this node
         if parent:
             self.depth = parent.depth + 1
@@ -47,3 +51,5 @@ class Node(AbstractNode):
                  '-------'
         return string
 
+    def __lt__(self, other):
+        return (self.path_cost + self.heuristics) < (other.path_cost + other.heuristics)

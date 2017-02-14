@@ -21,6 +21,20 @@ class Board(object):
             out = out + str(val) + ','
         return out[:-1]
 
+    def manhattanDist(self, goal = None):
+        totDist = 0
+        if goal == None:
+            goal = list(range(self.N*self.N))
+        for pos, val in enumerate(self.values):
+            posGoal = goal.index(val)
+            colGoal = posGoal % self.N
+            rowGoal = posGoal // self.N
+
+            colSelf = pos % self.N
+            rowSelf = pos // self.N
+            totDist += abs(colGoal - colSelf) + abs(rowGoal - rowSelf)
+        return totDist
+
     def validMoves(self):
         """Check possible movements of empty square"""
         position = self.values.index(0); # 0 represents the empty square
