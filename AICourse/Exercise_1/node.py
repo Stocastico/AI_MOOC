@@ -36,5 +36,14 @@ class Node(AbstractNode):
     def testEqual(self, goal):
         return self.board.isEqual(goal.board.values)
 
-
+    def __str__(self):
+        v = self.board.values
+        string = '-------\n' + \
+                 '|' + str(v[0]) + '|' + str(v[1]) + '|' + str(v[2]) + '|\n' + \
+                 '-------\n' + \
+                 '|' + str(v[3]) + '|' + str(v[4]) + '|' + str(v[5]) + '|\n' + \
+                 '_______\n' + \
+                 '|' + str(v[6]) + '|' + str(v[7]) + '|' + str(v[8]) + '|\n' + \
+                 '-------'
+        return string
 

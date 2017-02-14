@@ -1,4 +1,7 @@
 import sys
+
+sys.path.insert(1, 'D:\Code\VisualStudio\Python\AICourse\AICourse\Exercise_1') 
+
 from solver import Solver
 
 method = sys.argv[1]

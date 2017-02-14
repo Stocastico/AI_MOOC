@@ -58,7 +58,7 @@ class Solver(object):
             self.state = self.frontier.popleft()
             print("Current State: " + str(self.state.board.values))
             self.fringeSize -= 1
-            self.explored.add(self.state)
+            self.explored.add(str(self.state.board.values))
 
             if self.state.testEqual(self.goal):
                 self.searchDepth = self.state.depth
@@ -67,8 +67,10 @@ class Solver(object):
                 return True
 
             for neighbour in self.state.neighbours():
-                if not neighbour.belongs(self.frontier) and not neighbour.belongs(self.explored):
+                #if not neighbour.belongs(self.frontier) and not neighbour.belongs(self.explored):
+                if str(neighbour.board.values) not in self.explored:
                     self.frontier.append(neighbour)
+                    self.explored.add(str(neighbour.board.values))
                     self.fringeSize += 1
                     if neighbour.depth > self.maxSearchDepth:
                         self.maxSearchDepth = neighbour.depth
@@ -79,7 +81,33 @@ class Solver(object):
                 self.maxFringeSize = self.fringeSize
 
     def dfs(self):
-        pass
+        while len(self.frontier) > 0:
+            self.state = self.frontier.pop()
+            #print("Current State:\n" + str(self.state))
+            self.fringeSize -= 1
+            self.explored.add(str(self.state.board.values))
+
+            if self.state.testEqual(self.goal):
+                self.searchDepth = self.state.depth
+                self.costOfPath = self.state.depth
+                self.pathToGoal = self.getPathToGoal()
+                return True
+
+            neighbours = reversed(self.state.neighbours())
+
+            for neighbour in neighbours:
+                #if not neighbour.belongs(self.frontier) and not neighbour.belongs(self.explored):
+                if str(neighbour.board.values) not in self.explored:
+                    self.frontier.append(neighbour)
+                    self.explored.add(str(neighbour.board.values))
+                    self.fringeSize += 1
+                    if neighbour.depth > self.maxSearchDepth:
+                        self.maxSearchDepth = neighbour.depth
+
+            self.nodesExpanded += 1
+
+            if self.fringeSize > self.maxFringeSize:
+                self.maxFringeSize = self.fringeSize
 
     def ast(self):
         pass
