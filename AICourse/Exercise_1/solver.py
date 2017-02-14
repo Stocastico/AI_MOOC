@@ -20,9 +20,13 @@ class Solver(object):
             self.frontier = deque([self.state], None)
         elif self.method == 'bfs':
             self.frontier = [self.state] # list of states to be explored
-        elif  self.method == 'ast':
+        elif self.method == 'ast':
             self.frontier = PriorityQueue()
             self.frontier.put(self.state)
+        elif self.method == 'ida':
+            self.frontier = [self.state]
+            self.threshold = self.state.board.manhattanDist();
+            self.initialState = initialState
         self.explored = set() # list of states already explored
         self.goal = Node(list(range(len(initialState.split(',')))))
         self.pathToGoal = [] # something like ['Up', 'Left', 'Left']
@@ -47,6 +51,10 @@ class Solver(object):
           retVal = self.ast()
         elif self.method == 'ida':
           retVal = self.ida()
+          while retVal == False:
+              self.threshold = self.threshold + 2
+              self.frontier = [self.initialState]
+              retVal == self.ida()
         else:
           raise ValueError('Possible methods are dfs, bfs, ast, ida')
 
@@ -60,7 +68,7 @@ class Solver(object):
 
         while len(self.frontier) > 0:
             self.state = self.frontier.popleft()
-            print("Current State: " + str(self.state.board.values))
+            #print("Current State: " + str(self.state.board.values))
             self.fringeSize -= 1
             self.explored.add(str(self.state.board.values))
 
@@ -116,7 +124,7 @@ class Solver(object):
     def ast(self):
         while self.frontier.qsize() > 0:
             self.state = self.frontier.get()
-            print("Current State:\n" + str(self.state))
+            #print("Current State:\n" + str(self.state))
             self.fringeSize -= 1
             self.explored.add(str(self.state.board.values))
 
@@ -143,7 +151,35 @@ class Solver(object):
                 self.maxFringeSize = self.fringeSize
 
     def ida(self):
-        pass
+        while len(self.frontier) > 0:
+            self.state = self.frontier.pop()
+            #print("Current State:\n" + str(self.state))
+            self.fringeSize -= 1
+            self.explored.add(str(self.state.board.values))
+
+            if self.state.testEqual(self.goal):
+                self.searchDepth = self.state.depth
+                self.costOfPath = self.state.depth
+                self.pathToGoal = self.getPathToGoal()
+                return True
+
+            neighbours = reversed(self.state.neighbours())
+
+            for neighbour in neighbours:
+                #if not neighbour.belongs(self.frontier) and not neighbour.belongs(self.explored):
+                if str(neighbour.board.values) not in self.explored:
+                    neighbour.heuristics = neighbour.board.manhattanDist()
+                    if neighbour.heuristics < self.threshold:
+                        self.frontier.append(neighbour)
+                        self.explored.add(str(neighbour.board.values))
+                        self.fringeSize += 1
+                        if neighbour.depth > self.maxSearchDepth:
+                            self.maxSearchDepth = neighbour.depth
+
+            self.nodesExpanded += 1
+
+            if self.fringeSize > self.maxFringeSize:
+                self.maxFringeSize = self.fringeSize
 
     def writeResults(self):
         f = open('output.txt', 'w')
