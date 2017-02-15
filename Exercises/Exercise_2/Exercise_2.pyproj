@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>0aecdab4-8221-4dfb-a83a-8b05c383c0bc</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Exercise_2.py</StartupFile>
+    <StartupFile>src\GameManager_3.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,7 +22,18 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Exercise_2.py" />
+    <Folder Include="src\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\BaseAI_3.py" />
+    <Compile Include="src\BaseDisplayer_3.py" />
+    <Compile Include="src\ComputerAI_3.py" />
+    <Compile Include="src\Displayer_3.py" />
+    <Compile Include="src\GameManager_3.py" />
+    <Compile Include="src\Grid_3.py" />
+    <Compile Include="src\PlayerAI_3.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
