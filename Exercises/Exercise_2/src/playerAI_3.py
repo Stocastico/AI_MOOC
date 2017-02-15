@@ -29,16 +29,16 @@ class PlayerAI(BaseAI):
             return (None, self.eval(state))
 
         # increase iteration... temp hack before adding time constraint
-            self.iter += 1
+        self.iter += 1
 
         (maxChild, maxUtility) = (None, -inf)
 
         for currMove in moves:
-            tempState = state.clone()
-            tempState.move(currMove)
-            newMoves = tempState.getAvailableMoves()
+            child = state.clone()
+            child.move(currMove)
+            newMoves = child.getAvailableMoves()
 
-            (_, utility) = self.minimize(tempState, newMoves, alpha, beta)
+            (_, utility) = self.minimize(child, newMoves, alpha, beta)
 
             if utility > maxUtility:
                 (maxChild, maxUtility) = (child, utility)
@@ -49,21 +49,21 @@ class PlayerAI(BaseAI):
             if maxUtility > alpha:
                 alpha = maxUtility
 
-        return (maxChild, maxUtility)
+        return (maxChild, maxUtilitychild)
 
     def minimize(self, state, moves, alpha, beta):
         """ Find the child state with the highest utility value """
         if self.terminalTest(state):
-            return (null, self.eval(state))
+            return (None, self.eval(state))
 
         (minChild, minUtility) = (None, inf)
 
         for currMove in moves:
-            tempState = state.clone()
-            tempState.move(currMove)
-            newMoves = tempState.getAvailableMoves()
+            child = state.clone()
+            child.move(currMove)
+            newMoves = child.getAvailableMoves()
 
-            (_, utility) = self.maximize(tempState, newMoves, alpha, beta)
+            (_, utility) = self.maximize(child, newMoves, alpha, beta)
 
             if utility < minUtility:
                 (minChild, minUtility) = (child, utility)
