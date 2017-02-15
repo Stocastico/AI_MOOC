@@ -141,7 +141,7 @@ class Solver(object):
 
             for neighbour in neighbours:
                 if str(neighbour.board.values) not in self.explored:
-                    neighbour.heuristics = neighbour.board.manhattanDist()
+                    neighbour.heuristics = neighbour.depth + neighbour.board.manhattanDist()
                     self.frontier.put(neighbour)
                     self.explored.add(str(neighbour.board.values))
                     self.fringeSize += 1
@@ -156,9 +156,12 @@ class Solver(object):
     def ida(self):
         while len(self.frontier) > 0:
             self.state = self.frontier.pop()
-            print("Current State:\n" + str(self.state))
-            self.fringeSize -= 1
+            #print("Current State:\n" + str(self.state))
+            self.fringeSize = len(self.frontier)
             self.explored.add(str(self.state.board.values))
+
+            if self.state.depth > self.maxSearchDepth:
+                self.maxSearchDepth = self.state.depth
 
             if self.state.testEqual(self.goal):
                 self.searchDepth = self.state.depth
@@ -171,14 +174,13 @@ class Solver(object):
             for neighbour in neighbours:
                 #if not neighbour.belongs(self.frontier) and not neighbour.belongs(self.explored):
                 if str(neighbour.board.values) not in self.explored:
-                    neighbour.heuristics = neighbour.board.manhattanDist()
-                    if neighbour.heuristics < self.threshold:
+                    neighbour.heuristics = neighbour.depth + neighbour.board.manhattanDist()
+                    if neighbour.heuristics <= self.threshold:
                         self.frontier.append(neighbour)
                         self.explored.add(str(neighbour.board.values))
-                        self.fringeSize += 1
-                        if neighbour.depth > self.maxSearchDepth:
-                            self.maxSearchDepth = neighbour.depth
+                        
 
+            self.fringeSize = len(self.frontier)
             self.nodesExpanded += 1
 
             if self.fringeSize > self.maxFringeSize:
@@ -196,6 +198,7 @@ class Solver(object):
         s += "running_time: " + str(self.runningTime) + "\n"
         s += "max_ram_usage: " + str(self.maxRamUsage)
         f.write(s)
+        #print(s)
         f.close()
 
     def getPathToGoal(self):
