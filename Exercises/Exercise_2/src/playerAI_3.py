@@ -1,6 +1,5 @@
 from random import randint
 from BaseAI_3 import BaseAI
-from math import inf, log2
 import time
 
 score_map = {0:0,
@@ -25,6 +24,7 @@ class PlayerAI(BaseAI):
 
     def __init__(self):
         self.timeLimit = 0.095
+        self.infinity = float('Inf')
         self.maxDepth = 2
         self.weightMonotonicity = 5
         self.weightEmpty = 3
@@ -40,9 +40,9 @@ class PlayerAI(BaseAI):
 
         self.startTime = time.clock()
         moves = grid.getAvailableMoves()
-        bestScore = -inf
-        alpha = -inf
-        beta = inf
+        bestScore = -self.infinity
+        alpha = -self.infinity
+        beta = self.infinity
         bestMove = None
         self.maxDepth = 2
         chosenMoves = []
@@ -57,7 +57,7 @@ class PlayerAI(BaseAI):
             #print('Move chosen at depth : ' + str(self.maxDepth) + ' = ' + possMoves[bestMove] + ' - Utility = ' + str(bestScore))
             self.maxDepth += 2
             chosenMoves.append((bestMove, bestScore))
-            bestScore = -inf
+            bestScore = -self.infinity
             #print('MaxDepth: ' + str(self.maxDepth))
             if time.clock() - self.startTime > self.timeLimit:
                 break
@@ -72,7 +72,7 @@ class PlayerAI(BaseAI):
         if self.cutoffTest(depth):
             return (None, self.evalFunction(grid), None)
 
-        maxVal = -inf
+        maxVal = -self.infinity
         maxChild = None
         maxMove = None
 
@@ -97,7 +97,7 @@ class PlayerAI(BaseAI):
         if self.cutoffTest(depth):
             return (None, self.evalFunction(grid), None)
 
-        minVal = inf
+        minVal = self.infinity
         minChild = None
 
         for i in grid.getAvailableCells():
