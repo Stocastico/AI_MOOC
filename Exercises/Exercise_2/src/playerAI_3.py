@@ -7,7 +7,7 @@ class PlayerAI(BaseAI):
 
     def __init__(self):
         self.timeLimit = 0.095
-        self.maxDepth = 4
+        self.maxDepth = 2
         self.weightMonotonicity = 1.0
         self.weightEmpty = 1.0
         self.weightMax = 1.0
@@ -20,7 +20,7 @@ class PlayerAI(BaseAI):
         bestScore = -inf
         beta = inf
         bestMove = None
-        self.maxDepth = 4
+        self.maxDepth = 2
         
         while True:
             for move in moves:
@@ -32,8 +32,8 @@ class PlayerAI(BaseAI):
                     bestScore = v
                     bestMove = move
 
-            self.maxDepth += 1
-            print('MaxDepth: ' + str(self.maxDepth))
+            self.maxDepth += 2
+            #print('MaxDepth: ' + str(self.maxDepth))
             if time.clock() - startTime > self.timeLimit:
                 break
 
@@ -60,16 +60,16 @@ class PlayerAI(BaseAI):
 
 
     def minimize(self, grid, alpha, beta, depth, sTime):
-        moves = grid.getAvailableMoves()
         
-        if self.cutoffTest(depth, moves, sTime):
+        if self.cutoffTest(depth, [1], sTime):
             return self.evalFunction(grid)
 
         v = inf
 
-        for move in moves:
+        for i in grid.getAvailableCells():
             tmpGrid = grid.clone()
-            tmpGrid.move(move)
+            tmpGrid.setCellValue(i, getNewTileValue())
+
             v = min(v, self.maximize(tmpGrid, alpha, beta, depth + 1, sTime))
 
             if v <= alpha:
@@ -80,7 +80,7 @@ class PlayerAI(BaseAI):
     def evalFunction(self, grid):
         a = self.weightEmpty * calcEmpty(grid)
         b = 0#self.weightMax * calcMaxValue(grid)
-        c = 0#self.weightMonotonicity * calcMonotonicity(grid)
+        c = self.weightMonotonicity * calcMonotonicity(grid)
         d = self.weightSmooth * calcSmoothness(grid)
         #print('Empty: ' + str(a) + ' Max: ' + str(b) + ' Mono: ' + str(c) + ' Smooth: ' + str(d) )
         #print('Monotonicity: ' + str(c))
@@ -91,7 +91,14 @@ class PlayerAI(BaseAI):
                depth > self.maxDepth or \
                not moves
 
-# List of utility functions, used to compute the eval() function
+# List of utility functions
+def getNewTileValue():
+    if randint(0,99) < 90:
+        return 2
+    else:
+        return 4;
+
+
 def calcEmpty(grid):
     emptyCells = 0
 
