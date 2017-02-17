@@ -26,11 +26,15 @@ class PlayerAI(BaseAI):
     def __init__(self):
         self.timeLimit = 0.095
         self.maxDepth = 2
-        self.weightMonotonicity = 2
+        self.weightMonotonicity = 5
         self.weightEmpty = 3
         self.weightMax = 5
-        self.weightSmooth = 1
+        self.weightSmooth = 10
         self.startTime = 0.0
+        self.gridWeights = [[ 6,  5,  4,  1],
+                            [ 5,  4,  1,  0],
+                            [ 4,  1,  0, -1],
+                            [ 1,  0, -1, -2]]
 
     def getMove(self, grid):
 
@@ -112,17 +116,25 @@ class PlayerAI(BaseAI):
         return (minChild, minVal, None)
 
     def evalFunction(self, grid):
-        a = self.weightEmpty * calcEmpty(grid)
-        b = self.weightMax * calcMaxValue(grid)
-        c = self.weightMonotonicity * calcMonotonicity2(grid)
-        d = self.weightSmooth * calcSmoothness(grid)
-        print('Empty: ' + str(a) + ' Mono: ' + str(c) + ' Smooth: ' + str(d) )
+        #a = self.weightEmpty * calcEmpty(grid)
+        return self.calcWeightValue(grid)
+        #c = self.weightMonotonicity * calcMonotonicity(grid)
+        #d = self.weightSmooth * calcSmoothness(grid)
+        #print('Gradient: ' + str(b) + ' Mono: ' + str(c) + ' Smooth: ' + str(d) )
         #print('Monotonicity: ' + str(c))
-        return a + b + c + d
+        #return a + b + c + d
+
 
     def cutoffTest(self, depth):
         return time.clock() - self.startTime > self.timeLimit or \
                depth > self.maxDepth
+
+    def calcWeightValue(self, grid):
+        val = 0
+        for x in range(grid.size):
+            for y in range(grid.size):
+                val += grid.map[x][y] * self.gridWeights[x][y]
+        return val
 
 # List of utility functions
 def getNewTileValue():
@@ -152,27 +164,6 @@ def calcMaxValue(grid):
     return score_map[maxVal]
 
 def calcMonotonicity(grid):
-    """ measures how monotonic the grid is. This means the values of the tiles
-        are strictly increasing or decreasing in both the left/right
-        and up/down directions """
-
-    score = 0
-
-    for x in range(4):
-        for y in range(3):
-            curr = log2(grid.map[x][y]) if grid.map[x][y] else 0
-            next = log2(grid.map[x][y+1]) if grid.map[x][y+1] else 0
-            score += curr - next
-
-    for y in range(4):
-        for x in range(3):
-            curr = log2(grid.map[x][y]) if grid.map[x][y] else 0
-            next = log2(grid.map[x+1][y]) if grid.map[x+1][y] else 0
-            score += curr - next
-
-    return score
-
-def calcMonotonicity2(grid):
     score = 0
 
     for x in range(4):
@@ -202,7 +193,6 @@ def calcSmoothness(grid):
         for y in range(4):
             val = biggerGrid[x][y]
             if val > 0:
-                equals = 0
                 if biggerGrid[x+1][y] == val:
                     smoothness += 1
                 if biggerGrid[x][y+1] == val:
