@@ -332,3 +332,4 @@ ENV/
 .ropeproject
 
 
+*.txt
