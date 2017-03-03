@@ -5,14 +5,17 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b234616c-3fdb-407b-827a-4412b5d88a9a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>part_1\problem1_3.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Exercise_3</Name>
     <RootNamespace>Exercise_3</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>part_1\input1.csv output.csv</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,20 +30,19 @@
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="data\" />
     <Folder Include="part_1\" />
     <Folder Include="part_2\" />
     <Folder Include="part_3\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\input1.csv" />
-    <Content Include="data\input2.csv" />
-    <Content Include="data\input3.csv" />
+    <Content Include="part_1\input1.csv" />
+    <Content Include="part_2\input2.csv" />
+    <Content Include="part_3\input3.csv" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="part_1\PLA.py" />
-    <Compile Include="part_2\Linear_regression.py" />
-    <Compile Include="part_3\SVM_classification.py" />
+    <Compile Include="part_1\problem1_3.py" />
+    <Compile Include="part_2\problem2_3.py" />
+    <Compile Include="part_3\problem3_3.py" />
   </ItemGroup>
   <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
   <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
