@@ -28,7 +28,7 @@ class PLA:
         ones = np.ones((self.numSamples, 1))
         X = np.concatenate((ones, X), axis = 1)
         # check initial accuracy
-        classif = np.sign(np.dot(X, self.w))
+        classif = np.sign(X.dot(self.w))
         correct = np.equal(classif, y)
 
         #perform actual training
@@ -41,7 +41,7 @@ class PLA:
             # update weights
             tmp = y[posPt] * X[posPt, :]
             self.w = self.w + tmp
-            classif = np.sign(np.dot(X, self.w))
+            classif = np.sign(X.dot(self.w))
             correct = np.equal(classif, y)
             self.weightAsString += np.array_str(self.w) + '\n'
             self.plot(X, y)
