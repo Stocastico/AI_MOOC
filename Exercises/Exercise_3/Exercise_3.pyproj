@@ -40,6 +40,7 @@
     <Content Include="part_3\input3.csv" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="part_1\drawLine.py" />
     <Compile Include="part_1\problem1_3.py" />
     <Compile Include="part_2\problem2_3.py" />
     <Compile Include="part_3\problem3_3.py" />

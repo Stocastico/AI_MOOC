@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import sys
 import csv
 import time
+from drawLine import newline
 
 class PLA:
     """ Class implementing the Perceptron Learning Algorithm """
@@ -25,7 +26,7 @@ class PLA:
         maxIter = self.numSamples
         # add a column of ones at the end of X
         ones = np.ones((self.numSamples, 1))
-        X = np.concatenate((X, ones), axis = 1)
+        X = np.concatenate((ones, X), axis = 1)
         # check initial accuracy
         classif = np.sign(np.dot(X, self.w))
         correct = np.equal(classif, y)
@@ -58,18 +59,21 @@ class PLA:
 
     def plot(self, X, y):
         """ Plot the current status of the Perceptron """
+        plt.cla()
         h = 0.02
-        x_min, x_max = X[1:self.numFeatures, 0].min() - 1, X[1:self.numFeatures, 0].max() + 1
-        y_min, y_max = X[1:self.numFeatures, 1].min() - 1, X[1:self.numFeatures, 1].max() + 1
+        x_min, x_max = X[1:self.numFeatures, 1].min() - 1, X[1:self.numFeatures, 1].max() + 1
+        y_min, y_max = X[1:self.numFeatures, 2].min() - 1, X[1:self.numFeatures, 2].max() + 1
         xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
         # Plot the training points
-        self.ax.scatter(X[:, 0], X[:, 1], c = y, cmap = plt.cm.Paired)
+        self.ax.scatter(X[:, 1], X[:, 2], c = y, cmap = plt.cm.Paired)
         # Plot the separation line
-        n = np.linalg.norm(self.w)
-        ww = self.w / n
-        ww1 = [ww[1], -ww[0]]
-        ww2 = [-ww[1], ww[0]]
-        plt.plot([ww1[0], ww2[0]], [ww1[1], ww2[1]], 'k')
+        x0 = 0
+        y0 = -self.w[0] / self.w[2]
+        x1 = 1
+        y1 = -(self.w[1] + self.w[0]) / self.w[2]
+        p1 = (x0, y0)
+        p2 = (x1, y1)
+        newline(p1, p2)
         plt.draw()
         plt.pause(0.5)
 
