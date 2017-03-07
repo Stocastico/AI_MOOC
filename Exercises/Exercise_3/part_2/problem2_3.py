@@ -80,7 +80,7 @@ class LinearRegression:
 if __name__ == '__main__':
     inputFile = sys.argv[1]
     outputFile = sys.argv[2]
-    lr = LinearRegression(inputFile)
+    lr = LinearRegression(inputFile, 1)
     lr.normalize()
     lr.train()
     lr.writeOutput(outputFile)
