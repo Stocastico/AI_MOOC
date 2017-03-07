@@ -14,7 +14,7 @@
     <RootNamespace>Exercise_3</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>part_1\input1.csv output.csv</CommandLineArguments>
+    <CommandLineArguments>part_2\input2.csv output.csv</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

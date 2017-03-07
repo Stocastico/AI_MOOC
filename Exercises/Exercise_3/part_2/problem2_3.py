@@ -8,7 +8,7 @@ class LinearRegression:
     """ Class implementing Linear Regression """
     pass
 
-    def __init__(self, learning_rate = 0.01):
+    def __init__(self, inputFile, learning_rate = 0.01):
         # Open file
         input = np.loadtxt(open(inputFile, 'r'), delimiter=',')
         # Set features
@@ -29,9 +29,9 @@ class LinearRegression:
         self.ax = fig.add_subplot(111, projection='3d')
 
     def normalize(self):
-        means = np.mean(self.X[:, 1:], axis = 1)
-        stddevs = np.std(self.X[:, 1:], axis = 1)
-        X[:, 1:] = (X[:, 1:] - means[:, np.newaxis] ) / stddevs
+        means = np.mean(self.X[:, 1:], axis = 0)
+        stddevs = np.std(self.X[:, 1:], axis = 0)
+        self.X[:, 1:] = (self.X[:, 1:] - means[np.newaxis, :] ) / stddevs
 
     def train(self):
         self.iter = 0
@@ -42,23 +42,26 @@ class LinearRegression:
             Xp = self.X[order, :]
             yp = self.y[order]
             # Update weights
-            for k in range(self.numSamples):
-                self.w -= self.alpha * self.gradientError(Xp[k, :], yp[k])
+            self.w -= self.alpha * self.gradientError()
 
             # Compute error
             error = self.calcCost()
             print('Error = {}'.format(error))
             # Show plot
-            self.plot()
+            # self.plot()
 
-    def writeOutput(self):
+    
+    def gradientError(self):
+        loss = (self.h(self.X) - self.y)
+        gradient = self.X.T.dot(loss) / self.numSamples
+        return gradient
+            
+    def writeOutput(self, outName):
         with open(outName, 'w') as outFile:
             outFile.write('{},{},{},{},{}\n'.format(self.alpha, self.iter, self.w[1], self.w[2], self.w[0]))
 
     def calcCost(self):
-        c = 0
-        for k in range(self.numSamples):
-            c += (self.f(X[k,:]) - self.y[k]) ** 2
+        c = np.sum((self.h(self.X) - self.y) ** 2)
         return c / (2*self.numSamples)
 
     def plot(self):
@@ -67,8 +70,10 @@ class LinearRegression:
         self.ax.set_xlabel('Age (norm.)')
         self.ax.set_ylabel('Weight (norm.)')
         self.ax.set_zlabel('Height')
+        plt.draw()
+        plt.pause(0.2)
 
-    def f(self, x):
+    def h(self, x):
         return x.dot(self.w)
 
 
