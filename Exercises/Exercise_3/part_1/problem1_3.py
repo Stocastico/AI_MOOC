@@ -1,9 +1,8 @@
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import sys
 import csv
-import time
-from drawLine import newline
+#from drawLine import newline
 
 class Perceptron:
     """ Class implementing the Perceptron Learning Algorithm """
