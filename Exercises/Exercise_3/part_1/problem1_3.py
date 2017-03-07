@@ -17,15 +17,14 @@ class Perceptron:
         self.y = input[:,-1]
         self.maxIter = 100# self.numSamples
         self.w = np.zeros(self.numFeatures + 1)
-        self.fig, self.ax = plt.subplots()
-        plt.ion()
-        plt.show()
+        #self.fig, self.ax = plt.subplots()
+        #plt.ion()
+        #plt.show()
 
     def pla(self):
         """ Train the perceptron """
-        self.weightAsString = np.array_str(self.w) + '\n'
+        self.weightAsString = ('{}, {}, {}\n'.format(self.w[1], self.w[2], self.w[0]))
         # check initial accuracy
-        classif = np.sign(self.X.dot(self.w))
         error = self.calcError()
 
         numIt = 0
@@ -34,25 +33,11 @@ class Perceptron:
                 f_x = self.f(self.X[k, :])
                 if self.y[k] * self.f(self.X[k, :]) <= 0:
                     self.w += self.y[k] * self.X[k, :]
-                    self.weightAsString += ('{} {} {}\n'.format(self.w[1], self.w[2], self.w[0]))
+                    self.weightAsString += ('{}, {}, {}\n'.format(self.w[1], self.w[2], self.w[0]))
                     #print('Point # {}, w = {}'.format(k, self.w))
-                    self.plot()
+                    #self.plot()
             error = self.calcError()
             numIt += 1
-
-        ##perform actual training
-        #numIt = 0
-        #while numIt < self.maxIter and error > 0:
-        #    numIt += 1
-        #    posPt = np.random.randint(self.numSamples)
-        #    while classif[posPt] == self.y[posPt]:
-        #        posPt = np.random.randint(self.numSamples)
-        #    # update weights
-        #    self.w += self.y[posPt] * self.X[posPt, :]
-        #    classif = np.sign(self.X.dot(self.w))
-        #    error = self.calcError()
-        #    self.weightAsString += np.array_str(self.w) + '\n'
-        #    #self.plot()
 
         if numIt == self.maxIter:
             print('Convergence not reached!!!')
@@ -82,9 +67,6 @@ class Perceptron:
         """ Plot the current status of the Perceptron """
         plt.cla()
         h = 0.02
-        #x_min, x_max = X[1:self.numFeatures, 1].min() - 1, X[1:self.numFeatures, 1].max() + 1
-        #y_min, y_max = X[1:self.numFeatures, 2].min() - 1, X[1:self.numFeatures, 2].max() + 1
-        #xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
         # Plot the training points
         self.ax.scatter(self.X[:, 1], self.X[:, 2], c = self.y, cmap = plt.cm.Paired)
         # Plot the separation line
