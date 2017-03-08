@@ -49,7 +49,7 @@ def doSVM(X_train, X_test, y_train, y_test, outputFile):
 def doLogisticRegression(X_train, X_test, y_train, y_test, outputFile):
     print('------ Logistic Regression -------')
     tuned_parameters = {'C': [0.1, 0.5, 1, 5, 10, 50, 100]}
-    clf = GridSearchCV(LogisticRegression(), tuned_parameters, cv = 5)   
+    clf = GridSearchCV(LogisticRegression(), tuned_parameters, cv = 5, n_jobs = 8)   
     clf.fit(X_train, y_train)
     print(clf.best_params_)
     bestScore = clf.best_score_
@@ -60,7 +60,7 @@ def doKNN(X_train, X_test, y_train, y_test, outputFile):
     print('------ KNN ------')
     tuned_parameters = {'n_neighbors': range(1, 51), 
                         'leaf_size': range(5, 61, 5)}
-    clf = GridSearchCV(KNeighborsClassifier(), tuned_parameters, cv = 5)   
+    clf = GridSearchCV(KNeighborsClassifier(), tuned_parameters, cv = 5, n_jobs = 8)   
     clf.fit(X_train, y_train)
     print(clf.best_params_)
     bestScore = clf.best_score_
@@ -70,7 +70,7 @@ def doKNN(X_train, X_test, y_train, y_test, outputFile):
 def doDecisionTree(X_train, X_test, y_train, y_test, outputFile):
     print('------ Decision tree ------')
     tuned_parameters = {'max_depth': range(1, 51), 
-                        'min_samples_split ': range(1, 11)}
+                        'min_samples_split': range(2, 11)}
     clf = GridSearchCV(DecisionTreeClassifier(), tuned_parameters, cv = 5)   
     clf.fit(X_train, y_train)
     print(clf.best_params_)
@@ -81,7 +81,7 @@ def doDecisionTree(X_train, X_test, y_train, y_test, outputFile):
 def doRandomForest(X_train, X_test, y_train, y_test, outputFile):
     print('------ Random forest ------')
     tuned_parameters = {'max_depth': range(1, 51), 
-                        'min_samples_split ': range(1, 11)}
+                        'min_samples_split': range(2, 11)}
     clf = GridSearchCV(RandomForestClassifier(), tuned_parameters, cv = 5)   
     clf.fit(X_train, y_train)
     print(clf.best_params_)
@@ -91,7 +91,7 @@ def doRandomForest(X_train, X_test, y_train, y_test, outputFile):
 
 def writeData(outName, method, trainScore, testScore):
     with open(outName, 'a') as outFile:
-        outFile.write('{},{},{}\n'.format(method, trainScore, testScore))
+        outFile.write('{0},{1:10.4f},{2:10.4f}\n'.format(method, trainScore, testScore))
 
 if __name__ == '__main__':
     inputFile = sys.argv[1]
