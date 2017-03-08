@@ -29,7 +29,7 @@ class LinearRegression:
             self.maxIter = 100
         # Define figure
         #fig = plt.figure()
-        self.ax = fig.add_subplot(111, projection='3d')
+        #self.ax = fig.add_subplot(111, projection='3d')
 
     def normalize(self):
         means = np.mean(self.X[:, 1:], axis = 0)
