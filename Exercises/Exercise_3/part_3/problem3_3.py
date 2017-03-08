@@ -71,7 +71,7 @@ def doDecisionTree(X_train, X_test, y_train, y_test, outputFile):
     print('------ Decision tree ------')
     tuned_parameters = {'max_depth': range(1, 51), 
                         'min_samples_split': range(2, 11)}
-    clf = GridSearchCV(DecisionTreeClassifier(), tuned_parameters, cv = 5)   
+    clf = GridSearchCV(DecisionTreeClassifier(), tuned_parameters, cv = 5, n_jobs = 8)   
     clf.fit(X_train, y_train)
     print(clf.best_params_)
     bestScore = clf.best_score_
@@ -82,7 +82,7 @@ def doRandomForest(X_train, X_test, y_train, y_test, outputFile):
     print('------ Random forest ------')
     tuned_parameters = {'max_depth': range(1, 51), 
                         'min_samples_split': range(2, 11)}
-    clf = GridSearchCV(RandomForestClassifier(), tuned_parameters, cv = 5)   
+    clf = GridSearchCV(RandomForestClassifier(), tuned_parameters, cv = 5, n_jobs = 8)   
     clf.fit(X_train, y_train)
     print(clf.best_params_)
     bestScore = clf.best_score_
