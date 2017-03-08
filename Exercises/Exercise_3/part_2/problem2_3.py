@@ -61,7 +61,7 @@ class LinearRegression:
             
     def writeOutput(self, outName):
         with open(outName, 'a') as outFile:
-            outFile.write('{},{},{},{},{}\n'.format(self.alpha, self.iter, self.w[1], self.w[2], self.w[0]))
+            outFile.write('{},{},{},{},{}\n'.format(self.alpha, self.iter, self.w[0], self.w[1], self.w[2]))
 
     def calcCost(self):
         c = np.sum((self.h(self.X) - self.y) ** 2)
