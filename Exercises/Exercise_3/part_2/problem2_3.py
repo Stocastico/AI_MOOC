@@ -85,10 +85,10 @@ if __name__ == '__main__':
     outputFile = sys.argv[2]
     learningRates = [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10, 1.1]
     for k in learningRates:
-        print('====================')
-        print('\tLinear Regression with learning rate = {}'.format(k))
+        #print('====================')
+        #print('\tLinear Regression with learning rate = {}'.format(k))
         lr = LinearRegression(inputFile, k)
         lr.normalize()
         lr.train()
         lr.writeOutput(outputFile)
-        print('====================')
+        #print('====================')
