@@ -1,5 +1,5 @@
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
+#from mpl_toolkits.mplot3d import Axes3D
+#import matplotlib.pyplot as plt
 import numpy as np
 import sys
 import csv
@@ -28,7 +28,7 @@ class LinearRegression:
         else:
             self.maxIter = 100
         # Define figure
-        fig = plt.figure()
+        #fig = plt.figure()
         self.ax = fig.add_subplot(111, projection='3d')
 
     def normalize(self):
