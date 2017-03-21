@@ -218,5 +218,7 @@ if __name__ == '__main__':
     #printSudoku(sudoku, 9, 'abcdefghi', '123456789')
 
     # output results
-    print(outputResult(sudoku))
+    res = outputResult(sudoku)
+    with open('output.txt', 'w') as result:
+        result.write(res)
 

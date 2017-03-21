@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>2a176abe-1817-45d6-ba21-2304823e5104</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>testAll.py</StartupFile>
+    <StartupFile>driver_3.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -13,7 +13,7 @@
     <Name>Exercise_4</Name>
     <RootNamespace>Exercise_4</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>sudokus_start.txt sudokus_finish.txt</CommandLineArguments>
+    <CommandLineArguments>300010000075000004008060105200009000091000203006200010040000000050008600600050070 sudokus_start.txt sudokus_finish.txt</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
