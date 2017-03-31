@@ -23,7 +23,8 @@ biggerGrid = [[0] * (5) for i in range(5)]
 class PlayerAI(BaseAI):
 
     def __init__(self):
-        self.timeLimit = 0.095
+        #self.timeLimit = 0.095
+        self.timeLimit = 0.5
         self.infinity = float('Inf')
         self.maxDepth = 2
         self.weightMonotonicity = 5
