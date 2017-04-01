@@ -3,7 +3,7 @@ from random import shuffle
 
 train_path = "../resource/asnlib/public/aclImdb/train/" # use terminal to ls files under this directory
 test_path = "../resource/asnlib/public/imdb_te.csv" # test data for grade evaluation
-stopwords_path = "../resources/asnlib/public/aclImdb/stopwords.en.txt" # file containing common stopwords
+stopwords_path = "../resource/asnlib/public/aclImdb/stopwords.en.txt" # file containing common stopwords
 
 
 def imdb_data_preprocess(inpath, outpath="./", name="imdb_tr.csv", mix=False):
@@ -19,7 +19,7 @@ def imdb_data_preprocess(inpath, outpath="./", name="imdb_tr.csv", mix=False):
   # create out file
   with open(outpath + name, 'w') as f:
     # write header
-    f.write("row_number, text, polarity")
+    f.write("row_number, text, polarity\n")
     # initialize output string
     out = []
     # now read all files. First positive...
@@ -35,7 +35,7 @@ def imdb_data_preprocess(inpath, outpath="./", name="imdb_tr.csv", mix=False):
     # and finally write to file, adding row numbers
     row = 0
     for line in out:
-      f.write(row, line)
+      f.write(str(row) + ", " + line + '\n')
       row += 1
   
 
@@ -43,13 +43,13 @@ def imdb_remove_stopwords(inFile, outFile, stopFile):
   ''' Remove all stopwords from file inFile and write the filtered file to
   outFile'''
   # Read all stopwords
-  with open(stopFile, 'r'):
-    stopwords = set(f.readLines())
+  with open(stopFile, 'r') as f:
+    stopwords = set(f.read())
   # Open files 
   with open(inFile, 'r') as inF, open(outFile, 'w') as outF:
-    text = inF.readLines()
-    text = ' '.join([word for word in text.split() if word not in stopWords])
-    outF.write(text)
+    for line in iter(inF):
+      text = ' '.join([word for word in line.split() if word not in stopwords])
+      outF.write(text + '\n')
   
 if __name__ == "__main__":
   ''' prepare data '''
