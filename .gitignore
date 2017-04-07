@@ -339,3 +339,6 @@ ENV/
 *.csv
 
 Exercises/Exercise_5/imdb_tr0.csv
+*.feat
+Exercises/resource/asnlib/public/aclImdb/README
+*.vocab
