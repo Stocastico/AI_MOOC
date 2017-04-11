@@ -110,7 +110,7 @@ def bigram_classifier(text, y, test_text):
         contain the target values. From the input file we will create a 
         document-term matrix '''
     # Create unigram DTM 
-    bigram_vectorizer = CountVectorizer(ngram_range=(2,2), 
+    bigram_vectorizer = CountVectorizer(ngram_range=(1,2), 
                                         token_pattern=r'\b\w+\b', min_df=1)
     X = bigram_vectorizer.fit_transform(text)
     # Create and train classifier
@@ -144,7 +144,7 @@ def bigram_tfidf_classifier(text, y, test_text):
         document-term matrix '''
 
     # Create unigram DTM 
-    bigram_vectorizer = TfidfVectorizer(ngram_range=(2,2), 
+    bigram_vectorizer = TfidfVectorizer(ngram_range=(1,2), 
                                         token_pattern=r'\b\w+\b', min_df=1)
     X = bigram_vectorizer.fit_transform(text)
     # Create and train classifier
